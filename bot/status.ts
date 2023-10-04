@@ -1,13 +1,11 @@
-const client = require("../index");
+const client = require("../utils/discord");
 
-const clients = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+module.exports = function (app: Function) {
+  client.on("ready", () => {
+    console.log(`✅ SERVER RUNNING ON PORT ${process.env.PORT}`);
+    console.log(`✅ lOGGED IN AS ${client.user.tag}`);
+    client.user.setActivity("with discord.js");
+  });
 
-const status = client.on("ready", () => {
-  console.log(`✅ SERVER RUNNING ON PORT ${process.env.PORT}`);
-  console.log(`✅ lOGGED IN AS ${client.user.tag}`);
-  client.user.setActivity("with discord.js");
-});
-
-client.login(process.env.DISCORD_TOKEN);
-
-module.exports = status;
+  client.login(process.env.DISCORD_TOKEN);
+};
